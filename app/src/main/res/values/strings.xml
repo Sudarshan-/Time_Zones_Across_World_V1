@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Stores Display names of Menu -->
+<resources>
+
+    <string name="action_settings">About App</string>
+    <string name="filter">Settings</string>
+
+</resources>

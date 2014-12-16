@@ -1,0 +1,44 @@
+<resources>
+
+    <!-- Time Zone Name column theme. -->
+    <style name="clock1" >
+
+        <item name="android:background">#ff8a6d44</item> <!-- Background color of text -->
+        <item name="android:paddingLeft">6dp</item> <!-- Padding on left side, so that data is not wrapping with border -->
+        <item name="android:textSize">15sp</item> <!-- Font size of Text -->
+        <item name="android:layout_width">match_parent</item> <!-- Overlapping parent -->
+        <item name="android:layout_height">60dp</item> <!-- Height needed for clean tap action -->
+        <item name="android:layout_toLeftOf">@+id/divider</item> <!-- Relatively positioning in a row -->
+        <item name="android:gravity">left|center_vertical</item> <!-- Positioning of content in a table cell -->
+
+    </style>
+
+    <!-- Time column theme -->
+    <style name="clock2" >
+
+        <item name="android:background">#ff8a6d44</item>  <!-- Background color of time -->
+        <item name="android:textSize">15sp</item> <!-- Font size of Time -->
+        <item name="android:layout_width">60dp</item> <!-- Width needed for proper fit of time -->
+        <item name="android:layout_height">60dp</item> <!-- Height needed for clean tap action -->
+        <item name="android:layout_alignParentRight">true</item> <!-- Relatively positioning in a row -->
+        <item name="android:gravity">center</item> <!-- Positioning of content in a table cell -->
+
+    </style>
+
+    <!-- Separator of two columns theme -->
+    <style name="divider">
+
+        <item name="android:layout_width">2dp</item> <!-- Divider thickness-->
+        <item name="android:layout_height">60dp</item> <!-- Divider length-->
+        <item name="android:layout_toLeftOf">@+id/rowTextView2</item> <!-- Relatively positioning in a row -->
+        <item name="android:background">#ff4c443e</item>  <!-- Background color of divider -->
+
+    </style>
+
+    <!-- Default theme -->
+    <style
+        name="AppTheme"
+        parent="android:style/Theme.Holo.Light.DarkActionBar">
+    </style>
+
+</resources>
