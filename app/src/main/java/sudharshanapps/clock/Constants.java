@@ -2,8 +2,8 @@ package sudharshanapps.clock;
 
 public class Constants {
 
-    public static final String FIRST_COLUMN="First";
-    public static final String SECOND_COLUMN="Second";
+    public static final Integer FIRST_COLUMN=0;
+    public static final Integer SECOND_COLUMN=1;
 
 }
 

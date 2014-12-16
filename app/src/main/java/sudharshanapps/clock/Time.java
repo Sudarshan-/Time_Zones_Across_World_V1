@@ -44,7 +44,7 @@ public class Time extends Activity {
     private TwocolumnAdapter listAdapter;
 
     //Array Lists, which contain two types of data 12 and 24 hour format
-    private ArrayList<HashMap<String,String>> stringArrayList = new ArrayList<>();
+    private ArrayList<String[]> stringArrayList = new ArrayList<>();
 
     // This is mandatory\default function which fill menu of options
     @Override
@@ -153,7 +153,7 @@ public class Time extends Activity {
     }
 
     //Function used to read specific data from JSON string created by readFile() function
-    private ArrayList<HashMap<String,String>> parseJSONString(String jsonString){
+    private ArrayList<String[]> parseJSONString(String jsonString){
 
 
         try {
@@ -168,7 +168,7 @@ public class Time extends Activity {
             TimeZone tz;
             Calendar c;
             // HashMaps for twentyfour and twelve hour format
-            HashMap<String,String> twentyfourhour;
+            //HashMap<String,String> twentyfourhour;
 
             // JSONArray has four JSONObject
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -194,9 +194,9 @@ public class Time extends Activity {
                          String.format("%02d" , c.get(Calendar.MINUTE));
 
 
-                twentyfourhour=new HashMap<>(); //Prepare Hashmaps with indices
-                twentyfourhour.put(FIRST_COLUMN, name);
-                twentyfourhour.put(SECOND_COLUMN, time24hour);
+                String[] twentyfourhour=new String[2]; //Prepare Hashmaps with indices
+                twentyfourhour[FIRST_COLUMN] = name;
+                twentyfourhour[SECOND_COLUMN] = time24hour;
 
                 stringArrayList.add(twentyfourhour); //add to arraylist
                }

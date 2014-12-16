@@ -25,11 +25,11 @@ import static sudharshanapps.clock.Constants.SECOND_COLUMN;
 public class TwocolumnAdapter extends BaseAdapter {
 
     //Using constructed Hashmap and Main activity reference
-    private ArrayList<HashMap<String, String>> list;
+    private ArrayList<String[]> list;
     private Activity activity;
 
     //Constructor
-    public TwocolumnAdapter(Activity activity,ArrayList<HashMap<String, String>> list) {
+    public TwocolumnAdapter(Activity activity,ArrayList<String[]> list) {
         super();
 
         //Assigning contents to local instances
@@ -56,36 +56,26 @@ public class TwocolumnAdapter extends BaseAdapter {
 
 
         while(iterator.hasNext()){
-            try {
-                HashMap<String, String> tempValue = (HashMap<String, String>) iterator.next();
-                Set<Map.Entry<String, String>> mapSet = tempValue.entrySet();
-                Iterator<Map.Entry<String, String>> mapIterator = mapSet.iterator();
-                HashMap<String, String> new_list = new HashMap<>();
-                while (mapIterator.hasNext()) {
-                    Map.Entry<String, String> mapEntry = mapIterator.next();
-                    if (mapEntry.getKey().equals(SECOND_COLUMN)) {
+                String[] tempValue = (String[]) iterator.next();
+                String[] new_list = new String[2];
+                new_list[FIRST_COLUMN] = tempValue[FIRST_COLUMN];
                         try {
                             SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
                             SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
                             if (Counter == 1) {
-                                Date date = _24HourSDF.parse(mapEntry.getValue());
-                                new_list.put(mapEntry.getKey(), _12HourSDF.format(date));
+                                Date date = _24HourSDF.parse(tempValue[SECOND_COLUMN]);
+                                new_list[SECOND_COLUMN] = _12HourSDF.format(date);
                             } else {
-                                Date date = _12HourSDF.parse(mapEntry.getValue());
-                                new_list.put(mapEntry.getKey(), _24HourSDF.format(date));
+                                Date date = _12HourSDF.parse(tempValue[SECOND_COLUMN]);
+                                new_list[SECOND_COLUMN] = _24HourSDF.format(date);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } else {
-                        new_list.put(mapEntry.getKey(), mapEntry.getValue());
-                    }
-                }
+
                 list.set(index, new_list);
                 index++;
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+
         }
         this.notifyDataSetChanged();
         /*if(Counter == 0){
@@ -119,9 +109,9 @@ public class TwocolumnAdapter extends BaseAdapter {
             holder=(ViewHolder) convertView.getTag();
         }
 
-        HashMap<String, String> map=list.get(position);
-        holder.txtFirst.setText(map.get(FIRST_COLUMN));
-        holder.txtSecond.setText(map.get(SECOND_COLUMN));
+        String[] map=list.get(position);
+        holder.txtFirst.setText(map[FIRST_COLUMN]);
+        holder.txtSecond.setText(map[SECOND_COLUMN]);
 
         return convertView;
     }
