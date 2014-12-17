@@ -6,11 +6,11 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.io.InputStream;
@@ -262,6 +262,24 @@ public class Time extends Activity {
 
         for(int i=0; i < listAdapter.getGroupCount(); i++)
             mainListView.expandGroup(i);
+
+        mainListView.setOnGroupExpandListener(new OnGroupExpandListener()
+        {
+            @Override
+            public void onGroupExpand(int groupPosition)
+            {
+               // Log.e("onGroupExpand", "OK");
+            }
+        });
+
+        mainListView.setOnGroupCollapseListener(new OnGroupCollapseListener()
+        {
+            @Override
+            public void onGroupCollapse(int groupPosition)
+            {
+                //Log.e("onGroupCollapse", "OK");
+            }
+        });
 
         // Assigning Onclick event to list view rows
        /* mainListView.setOnItemClickListener(new OnItemClickListener() {
