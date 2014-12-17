@@ -2,6 +2,7 @@ package sudharshanapps.clock;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
@@ -254,7 +255,6 @@ public class Time extends Activity {
         //System.out.println("*************");
         //System.out.println(mainListView);
         //System.out.println(stringArrayList);
-
 
 
         // Set the ArrayAdapter as the ListView's adapter.

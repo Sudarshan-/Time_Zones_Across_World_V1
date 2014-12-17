@@ -4,8 +4,6 @@
     <item android:state_expanded="true"
         android:drawable="@drawable/imageopen"/>
 
-    <item android:state_empty="true"
-        android:drawable="@drawable/imageclose"/>
-    <item android:drawable="@drawable/imageopen"/>
-    
+    <item android:drawable="@drawable/imageclose"/>
+
 </selector>
