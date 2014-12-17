@@ -4,7 +4,7 @@
     <style name="clock1" >
 
         <item name="android:background">#ff8a6d44</item> <!-- Background color of text -->
-        <item name="android:paddingLeft">?android:attr/expandableListPreferredChildPaddingLeft</item> <!-- Padding on left side, so that data is not wrapping with border -->
+        <item name="android:paddingLeft">30sp</item> <!-- Padding on left side, so that data is not wrapping with border -->
         <item name="android:textSize">15sp</item> <!-- Font size of Text -->
         <item name="android:layout_width">match_parent</item> <!-- Overlapping parent -->
         <item name="android:layout_height">60dp</item> <!-- Height needed for clean tap action -->
