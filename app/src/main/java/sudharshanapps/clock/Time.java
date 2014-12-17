@@ -8,6 +8,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Calendar;
@@ -22,9 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import android.app.AlertDialog;
-import android.widget.AdapterView.OnItemClickListener;
-import android.view.View;
-import android.widget.AdapterView;
+import java.util.Set;
 
 
 import static sudharshanapps.clock.Constants.FIRST_COLUMN;
@@ -225,6 +224,7 @@ public class Time extends Activity {
             e.printStackTrace();
         }
 
+        
         //returning 24 hour format data by default
 
         return stringArrayList;
@@ -249,7 +249,11 @@ public class Time extends Activity {
         listAdapter = new TwocolumnAdapter(this, parseJSONString(readFile()),headersList);
 
         //Saving the reference to prepare new adapter when reload is needed
-        object = this;
+        //object = this;
+
+        //System.out.println("*************");
+        //System.out.println(mainListView);
+        //System.out.println(stringArrayList);
 
         // Set the ArrayAdapter as the ListView's adapter.
         mainListView.setAdapter(listAdapter);
