@@ -2,15 +2,7 @@ package sudharshanapps.clock;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.Date;
 import java.util.List;
 import android.graphics.Typeface;
 
@@ -62,7 +54,7 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.simpleheader, null);
+            convertView = inflater.inflate(R.layout.simpleheader, parent,false);
 
             headerViewHolder = new HeaderViewHolder();
 
@@ -106,7 +98,7 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.simplerow, null);
+            convertView = inflater.inflate(R.layout.simplerow, parent,false);
             holder = new ViewHolder();
 
             holder.txtFirst = (TextView) convertView.findViewById(R.id.rowTextView1);
