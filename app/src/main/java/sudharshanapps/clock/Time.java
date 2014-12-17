@@ -224,7 +224,7 @@ public class Time extends Activity {
             e.printStackTrace();
         }
 
-        
+
         //returning 24 hour format data by default
 
         return stringArrayList;
@@ -255,8 +255,13 @@ public class Time extends Activity {
         //System.out.println(mainListView);
         //System.out.println(stringArrayList);
 
+
+
         // Set the ArrayAdapter as the ListView's adapter.
         mainListView.setAdapter(listAdapter);
+
+        for(int i=0; i < listAdapter.getGroupCount(); i++)
+            mainListView.expandGroup(i);
 
         // Assigning Onclick event to list view rows
        /* mainListView.setOnItemClickListener(new OnItemClickListener() {

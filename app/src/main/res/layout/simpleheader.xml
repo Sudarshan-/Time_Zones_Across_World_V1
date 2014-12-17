@@ -7,7 +7,9 @@
         <TextView
             android:id="@+id/lblListHeader"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:textSize="17sp"
-            android:textColor="#f9f93d" />
+            android:textColor="#f9f93d"
+            android:gravity="start|center"
+            android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"/>
 </LinearLayout>

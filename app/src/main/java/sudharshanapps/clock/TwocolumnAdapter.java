@@ -1,5 +1,6 @@
 package sudharshanapps.clock;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import android.graphics.Typeface;
 
 import android.app.Activity;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 
@@ -23,14 +25,14 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
     //Using constructed Hashmap and Main activity reference
     private HashMap<String, ArrayList<String[]>> list;
     private ArrayList<String> headers;
-    private Activity activity;
+    private Context context;
 
     //Constructor
-    public TwocolumnAdapter(Activity activity, HashMap<String, ArrayList<String[]>> list, ArrayList<String> headers) {
+    public TwocolumnAdapter(Context context, HashMap<String, ArrayList<String[]>> list, ArrayList<String> headers) {
         super();
 
         //Assigning contents to local instances
-        this.activity = activity;
+        this.context = context;
         this.list = list;
         this.headers = headers;
     }
@@ -40,35 +42,42 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
         return (list.get(headers.get(groupPosition))).size();
     }
 
-    private class HeaderViewHolder {
-        TextView txtFirst;
-    }
+    //private class HeaderViewHolder {
+      //  TextView txtFirst;
+    //}
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         String headerTitle = (String) getGroup(groupPosition);
 
-        LayoutInflater inflater = activity.getLayoutInflater();
+        //LayoutInflater inflater = activity.getLayoutInflater();
 
-        HeaderViewHolder headerViewHolder;
+        //HeaderViewHolder headerViewHolder;
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.simpleheader, parent,false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            headerViewHolder = new HeaderViewHolder();
+            convertView = inflater.inflate(R.layout.simpleheader, null);
 
-            headerViewHolder.txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader);
-
-            convertView.setTag(headerViewHolder);
-        } else {
-
-            headerViewHolder = (HeaderViewHolder) convertView.getTag();
         }
+            //headerViewHolder = new HeaderViewHolder();
 
-        headerViewHolder.txtFirst.setTypeface(null, Typeface.BOLD);
-        headerViewHolder.txtFirst.setText(headerTitle);
+            //headerViewHolder.txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader);
+
+           // convertView.setTag(headerViewHolder);
+        //} else {
+
+          //  headerViewHolder = (HeaderViewHolder) convertView.getTag();
+        //}
+
+        TextView txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader);
+
+        //headerViewHolder.txtFirst.setTypeface(null, Typeface.BOLD);
+        txtFirst.setText(headerTitle);
+
+        //ExpandableListView.expand
 
         return convertView;
     }
@@ -91,28 +100,31 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
+        //ViewHolder holder;
 
-        LayoutInflater inflater = activity.getLayoutInflater();
+        //LayoutInflater inflater = activity.getLayoutInflater();
 
         final String[] rowContent = (String[]) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.simplerow, parent,false);
-            holder = new ViewHolder();
+            //convertView = inflater.inflate(R.layout.simplerow, null);
+            //holder = new ViewHolder();
 
-            holder.txtFirst = (TextView) convertView.findViewById(R.id.rowTextView1);
-            holder.txtSecond = (TextView) convertView.findViewById(R.id.rowTextView2);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.simplerow, null);
+        }
+            TextView txtFirst = (TextView) convertView.findViewById(R.id.rowTextView1);
+            TextView txtSecond = (TextView) convertView.findViewById(R.id.rowTextView2);
 
-            convertView.setTag(holder);
+        /*    convertView.setTag(holder);
         } else {
 
             holder = (ViewHolder) convertView.getTag();
-        }
+        }*/
 
-        holder.txtFirst.setText(rowContent[FIRST_COLUMN]);
-        holder.txtSecond.setText(rowContent[SECOND_COLUMN]);
+        txtFirst.setText(rowContent[FIRST_COLUMN]);
+        txtSecond.setText(rowContent[SECOND_COLUMN]);
 
         return convertView;
         //return null;
