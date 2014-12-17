@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textClock"
         android:layout_gravity="center_vertical"
-
+        android:groupIndicator="@drawable/indicator"
          />
 
 </LinearLayout>
