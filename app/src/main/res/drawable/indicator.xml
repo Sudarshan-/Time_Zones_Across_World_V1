@@ -2,8 +2,8 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_expanded="true"
-        android:drawable="@drawable/imageopen"/>
+        android:drawable="@drawable/imageopen_edition1"/>
 
-    <item android:drawable="@drawable/imageclose"/>
+    <item android:drawable="@drawable/imageclose_edition1"/>
 
 </selector>
