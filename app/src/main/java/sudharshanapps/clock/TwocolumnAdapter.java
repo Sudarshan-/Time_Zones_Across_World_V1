@@ -2,8 +2,9 @@ package sudharshanapps.clock;
 
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import android.graphics.Typeface;
 
 import android.app.Activity;
@@ -20,12 +21,12 @@ import static sudharshanapps.clock.Constants.SECOND_COLUMN;
 public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
     //Using constructed Hashmap and Main activity reference
-    private HashMap<String, List<String[]>> list;
-    private List<String> headers;
+    private HashMap<String, ArrayList<String[]>> list;
+    private ArrayList<String> headers;
     private Activity activity;
 
     //Constructor
-    public TwocolumnAdapter(Activity activity, HashMap<String, List<String[]>> list, List<String> headers) {
+    public TwocolumnAdapter(Activity activity, HashMap<String, ArrayList<String[]>> list, ArrayList<String> headers) {
         super();
 
         //Assigning contents to local instances

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.io.InputStream;
@@ -44,7 +46,9 @@ public class Time extends Activity {
     private TwocolumnAdapter listAdapter;
 
     //Array Lists, which contain two types of data 12 and 24 hour format
-    private ArrayList<String[]> stringArrayList = new ArrayList<>();
+    private HashMap<String,ArrayList<String[]>> stringArrayList = new HashMap<>();
+
+    private ArrayList<String> headersList = new ArrayList<>();
 
     // This is mandatory\default function which fill menu of options
     @Override
@@ -95,7 +99,7 @@ public class Time extends Activity {
 
         hour_counter = (hour_counter ==0) ? 1:0;
         //Call Function to include new time format changes
-        listAdapter.ChangeTimeFormat(hour_counter);
+        //listAdapter.ChangeTimeFormat(hour_counter);
 
     }
 
@@ -153,7 +157,7 @@ public class Time extends Activity {
     }
 
     //Function used to read specific data from JSON string created by readFile() function
-    private ArrayList<String[]> parseJSONString(String jsonString){
+    private HashMap<String,ArrayList<String[]>> parseJSONString(String jsonString){
 
 
         try {
@@ -168,10 +172,12 @@ public class Time extends Activity {
             TimeZone tz;
             Calendar c;
             // HashMaps for twentyfour and twelve hour format
-            //HashMap<String,String> twentyfourhour;
+
 
             // JSONArray has four JSONObject
             for (int i = 0; i < jsonArray.length(); i++) {
+
+                ArrayList<String[]> childInfo = new ArrayList<>();
 
                 // Creating JSONObject from JSONArray
                 jsonObj = jsonArray.getJSONObject(i);
@@ -198,8 +204,21 @@ public class Time extends Activity {
                 twentyfourhour[FIRST_COLUMN] = name;
                 twentyfourhour[SECOND_COLUMN] = time24hour;
 
-                stringArrayList.add(twentyfourhour); //add to arraylist
-               }
+                childInfo.add(twentyfourhour);
+
+                if(!(headersList.contains(zone))){
+                    headersList.add(zone);
+                }
+
+                ArrayList<String[]> checkKey = stringArrayList.get(zone);
+
+                if(checkKey== null){
+                    stringArrayList.put(zone,childInfo); //add to arraylist
+                }else {
+                    checkKey.add(twentyfourhour);
+                    stringArrayList.put(zone,checkKey); //add to arraylist
+                }
+            }
 
         } catch (JSONException e) {
             //Exception handling
@@ -224,10 +243,10 @@ public class Time extends Activity {
         setContentView(R.layout.activity_time);
 
         // Find the ListView resource and assign to ListView Object created
-        ListView mainListView = (ListView) findViewById(R.id.mainListView);
+        ExpandableListView mainListView = (ExpandableListView) findViewById(R.id.textClock);
 
         // Initialize adapter with data by parsing JSON
-        listAdapter = new TwocolumnAdapter(this, parseJSONString(readFile()));
+        listAdapter = new TwocolumnAdapter(this, parseJSONString(readFile()),headersList);
 
         //Saving the reference to prepare new adapter when reload is needed
         object = this;
@@ -236,7 +255,7 @@ public class Time extends Activity {
         mainListView.setAdapter(listAdapter);
 
         // Assigning Onclick event to list view rows
-        mainListView.setOnItemClickListener(new OnItemClickListener() {
+       /* mainListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
 
                 // Creating Alert Box
@@ -251,7 +270,7 @@ public class Time extends Activity {
                 //Displaying Dialog Box
                 adb.show();
             }
-        });
+        });*/
 
     }
 
