@@ -24,9 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import android.app.AlertDialog;
-import java.util.Set;
 
 
+//Importing constants from Constants class
 import static sudharshanapps.clock.Constants.FIRST_COLUMN;
 import static sudharshanapps.clock.Constants.SECOND_COLUMN;
 
@@ -38,16 +38,13 @@ public class Time extends Activity {
     // Original hour format counter 0 = 24 hour format; 1 = 12 hour format
     private int hour_counter = 0;
 
-    //Reference to hold current Object of Public class instance Time
-    //This is used as a lever to change Adapter
-    private Time object;
-
     //Public class to driver Adapter customization instead of using arrayadapters etc.
     private TwocolumnAdapter listAdapter;
 
-    //Array Lists, which contain two types of data 12 and 24 hour format
+    //Array Lists, which contains list of timezones under a group
     private HashMap<String,ArrayList<String[]>> stringArrayList = new HashMap<>();
 
+    //List of time zones
     private ArrayList<String> headersList = new ArrayList<>();
 
     // This is mandatory\default function which fill menu of options
@@ -61,12 +58,12 @@ public class Time extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        MenuItem _clockformat = menu.findItem(R.id.search_button);
+        MenuItem _clockformat = menu.findItem(R.id.search_button); // Retrieve reference of Menu from layout
 
         if(hour_counter == 1){
-            _clockformat.setTitle("Time in 24 Hour Format");
+            _clockformat.setTitle("Time in 24 Hour Format"); // Change Menu text based on old selection
         }else {
-            _clockformat.setTitle("Time in 12 Hour Format");
+            _clockformat.setTitle("Time in 12 Hour Format"); // Change Menu text based on old selection
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -204,19 +201,21 @@ public class Time extends Activity {
                 twentyfourhour[FIRST_COLUMN] = name;
                 twentyfourhour[SECOND_COLUMN] = time24hour;
 
+                //Preparing timezone references
                 childInfo.add(twentyfourhour);
 
-                if(!(headersList.contains(zone))){
-                    headersList.add(zone);
+                if(!(headersList.contains(zone))){ //Add current zone to headers list
+                    headersList.add(zone); // No more duplicates
                 }
 
+                //Checking if a zone already exist in hashmap
                 ArrayList<String[]> checkKey = stringArrayList.get(zone);
 
                 if(checkKey== null){
-                    stringArrayList.put(zone,childInfo); //add to arraylist
+                    stringArrayList.put(zone,childInfo); //No zone available so add to arraylist
                 }else {
-                    checkKey.add(twentyfourhour);
-                    stringArrayList.put(zone,checkKey); //add to arraylist
+                    checkKey.add(twentyfourhour); // ZOne available, retrieve old zone information
+                    stringArrayList.put(zone,checkKey); //add to existing zone information
                 }
             }
 
@@ -232,7 +231,12 @@ public class Time extends Activity {
     }
 
 
-
+    private int GetPixelFromDips(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
 
     // This is invoked when ListView is created and loaded to system
 
@@ -249,20 +253,20 @@ public class Time extends Activity {
         // Initialize adapter with data by parsing JSON
         listAdapter = new TwocolumnAdapter(this, parseJSONString(readFile()),headersList);
 
-        //Saving the reference to prepare new adapter when reload is needed
-        //object = this;
-
-        //System.out.println("*************");
-        //System.out.println(mainListView);
-        //System.out.println(stringArrayList);
-
-
         // Set the ArrayAdapter as the ListView's adapter.
         mainListView.setAdapter(listAdapter);
 
-        for(int i=0; i < listAdapter.getGroupCount(); i++)
-            mainListView.expandGroup(i);
+        for(int i=0; i < listAdapter.getGroupCount(); i++) //Get all groups
+            mainListView.expandGroup(i); //Expanding each group by default
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+
+        mainListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+
+
+        //Listener when group is expanded
         mainListView.setOnGroupExpandListener(new OnGroupExpandListener()
         {
             @Override
@@ -281,23 +285,6 @@ public class Time extends Activity {
             }
         });
 
-        // Assigning Onclick event to list view rows
-       /* mainListView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
-                // Creating Alert Box
-                AlertDialog.Builder adb = new AlertDialog.Builder(object);
-
-                //adb.setTitle("Added to Favourites");
-                adb.setTitle("Time Zone Added to Favourites");
-
-                // Adding Ok Button
-                adb.setPositiveButton("OK", null);
-
-                //Displaying Dialog Box
-                adb.show();
-            }
-        });*/
 
     }
 

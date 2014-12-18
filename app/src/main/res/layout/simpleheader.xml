@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#ff8a6d44">
+    <!-- Header Row -->
         <TextView
             android:id="@+id/lblListHeader"
             android:layout_width="fill_parent"

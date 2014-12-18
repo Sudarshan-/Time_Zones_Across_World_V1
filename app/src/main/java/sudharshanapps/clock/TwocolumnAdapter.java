@@ -6,11 +6,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import android.graphics.Typeface;
 
-import android.app.Activity;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 
@@ -22,9 +19,13 @@ import static sudharshanapps.clock.Constants.SECOND_COLUMN;
 //Constructing custom adapter instead of standard array adapters etc
 public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
-    //Using constructed Hashmap and Main activity reference
+    //Using constructed Hashmap and Main activity reference(Child list)
     private HashMap<String, ArrayList<String[]>> list;
+
+    //Headers list
     private ArrayList<String> headers;
+
+    //Context passed from Activity
     private Context context;
 
     //Constructor
@@ -39,21 +40,14 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return (list.get(headers.get(groupPosition))).size();
+        return (list.get(headers.get(groupPosition))).size(); // Returning child count of each header from hashmap
     }
 
-    //private class HeaderViewHolder {
-      //  TextView txtFirst;
-    //}
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-        String headerTitle = (String) getGroup(groupPosition);
-
-        //LayoutInflater inflater = activity.getLayoutInflater();
-
-        //HeaderViewHolder headerViewHolder;
+        String headerTitle = (String) getGroup(groupPosition); //retrieving Group header title from headers list using group position
 
         if (convertView == null) {
 
@@ -62,77 +56,54 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.simpleheader, null);
 
         }
-            //headerViewHolder = new HeaderViewHolder();
 
-            //headerViewHolder.txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader);
+        TextView txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader); // Obtaining reference of header from layout
 
-           // convertView.setTag(headerViewHolder);
-        //} else {
+        txtFirst.setText(headerTitle); // Assigning text to header
 
-          //  headerViewHolder = (HeaderViewHolder) convertView.getTag();
-        //}
-
-        TextView txtFirst = (TextView) convertView.findViewById(R.id.lblListHeader);
-
-        //headerViewHolder.txtFirst.setTypeface(null, Typeface.BOLD);
-        txtFirst.setText(headerTitle);
-
-        //ExpandableListView.expand
-
-        return convertView;
+        return convertView; // returning head view
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return headers.get(groupPosition);
+        return headers.get(groupPosition); // returning header string using group position
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return groupPosition;
+        return groupPosition; //returning group position
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return (list.get(headers.get(groupPosition))).get(childPosition);
+        return (list.get(headers.get(groupPosition))).get(childPosition); //returning child arraylist using group reference
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        //ViewHolder holder;
-
-        //LayoutInflater inflater = activity.getLayoutInflater();
-
-        final String[] rowContent = (String[]) getChild(groupPosition, childPosition);
+        final String[] rowContent = (String[]) getChild(groupPosition, childPosition); //Obtaining list of children for a group
 
         if (convertView == null) {
-
-            //convertView = inflater.inflate(R.layout.simplerow, null);
-            //holder = new ViewHolder();
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.simplerow, null);
         }
+            //Obtaining Child 1 references
             TextView txtFirst = (TextView) convertView.findViewById(R.id.rowTextView1);
+
+            //Obtaining child 2 reference
             TextView txtSecond = (TextView) convertView.findViewById(R.id.rowTextView2);
 
-        /*    convertView.setTag(holder);
-        } else {
-
-            holder = (ViewHolder) convertView.getTag();
-        }*/
-
-        txtFirst.setText(rowContent[FIRST_COLUMN]);
-        txtSecond.setText(rowContent[SECOND_COLUMN]);
+        txtFirst.setText(rowContent[FIRST_COLUMN]); //Assigning content to children
+        txtSecond.setText(rowContent[SECOND_COLUMN]); //Assigning content to children
 
         return convertView;
-        //return null;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return childPosition; // Returning child reference
     }
 
     @Override
@@ -142,7 +113,7 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return headers.size();
+        return headers.size(); // Returning no of headers
     }
 
     @Override
@@ -150,11 +121,6 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    // Return Adapter size
-    /*@Override
-    public int getCount() {
-        return list.size();
-    }*/
 
     private class ViewHolder {
         TextView txtFirst;
@@ -211,46 +177,7 @@ public class TwocolumnAdapter extends BaseExpandableListAdapter {
         }
     }*/
 
-    //Creating view of Adapter
-   /*  @Override
-   public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
-
-        LayoutInflater inflater=activity.getLayoutInflater();
-
-        if(convertView == null){
-
-            convertView=inflater.inflate(R.layout.simplerow, null);
-            holder=new ViewHolder();
-
-            holder.txtFirst=(TextView) convertView.findViewById(R.id.rowTextView1);
-            holder.txtSecond=(TextView) convertView.findViewById(R.id.rowTextView2);
-
-            convertView.setTag(holder);
-        }else{
-
-            holder=(ViewHolder) convertView.getTag();
-        }
-
-        HashMap<String, String> map=list.get(position);
-        holder.txtFirst.setText(map.get(FIRST_COLUMN));
-        holder.txtSecond.setText(map.get(SECOND_COLUMN));
-
-        return convertView;
-    }*/
-
-    //return selected List item ID
-    /*@Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    //Returns Item when position is passed
-    @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }*/
 
 
 
